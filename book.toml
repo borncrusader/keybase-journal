@@ -1,0 +1,6 @@
+[book]
+authors = ["Srinath Krishna Ananthakrishnan"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Sysdump"

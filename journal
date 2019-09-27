@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# bail out on the first error
+set -e
+
+# Changet this to use your favorite editor
+EDITOR=typora
+
+year=$(date +%0y)
+month=$(date +%0m)
+day=$(date +%0d)
+
+# This script uses envsubst to substitute a variable field in the format
+# document to create a journal entry for a given day. Macs don't have this by
+# default, so let's prepare the system for the first time by installing these
+prepare() {
+    if [[ $(uname) == "Darwin" ]]; then
+        brew install gettext
+        brew link --force gettext
+    fi
+
+    echo "All done!"
+}
+
+open_entry() {
+    echo "Opening $1"
+
+    if [[ $(uname) == "Darwin" ]]; then
+        # -W waits for the application to close before exiting
+        open -W $1
+    else
+        # This is mostly Linux and BSDs
+        ${EDITOR} $1
+    fi
+}
+
+today() {
+    journal_dir=src/journal/${year}/${month}
+    if [[ ! -d ${journal_dir} ]]; then
+        mkdir -p ${journal_dir}
+    fi
+
+    journal_file=${journal_dir}/${day}.md
+
+    if [[ ! -f ${journal_file} ]]; then
+        DATE=${year}/${month}/${day} envsubst < src/format/journal-format.md > \
+            ${journal_file}
+
+        echo "- [${year}/${month}/${day}](journal/${year}/${month}/${day}.md)]" >> \
+            src/SUMMARY.md
+
+        echo "Adding new journal ${journal_file}"
+
+        open_entry ${journal_file}
+        git add ${journal_file}
+        git commit -m "Adding journal: ${journal_file}"
+        git push
+    else
+        echo "Opening existing journal ${journal_file}"
+
+        open_entry ${journal_file}
+        git add -u ${journal_file}
+        git commit -m "Updating journal: ${journal_file}"
+        git push
+    fi
+}
+
+$@
