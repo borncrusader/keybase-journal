@@ -41,13 +41,13 @@ system to write books. This repository is ideally just a wrapper around
 
 ## How does this work?
 
-    1. Clone the repository
-    2. Run `./journal prepare` for the first time
-    3. The format for every journal is stored in `src/format/`
-    4. Run `./journal today` to create an entry for today. This would
-       automatically open an editor for you. The default `EDITOR` is configured
-       as [Typora](https://typora.io/) which is a truly remarkable editor. Feel
-       free to change this as you please.
+   1. Clone the repository
+   2. Run `./journal prepare` for the first time
+   3. The format for every journal is stored in `src/format/`
+   4. Run `./journal today` to create an entry for today. This would
+      automatically open an editor for you. The default `EDITOR` is configured
+      as [Typora](https://typora.io/) which is a truly remarkable editor. Feel
+      free to change this as you please.
 
 ## How to export as a book?
 TODO
