@@ -52,14 +52,14 @@ today() {
         echo "Adding new journal ${journal_file}"
 
         open_entry ${journal_file}
-        git add ${journal_file}
+        git add ${journal_file} src/SUMMARY.md
         git commit -m "Adding journal: ${journal_file}"
         git push
     else
         echo "Opening existing journal ${journal_file}"
 
         open_entry ${journal_file}
-        git add -u ${journal_file}
+        git add -u ${journal_file} src/SUMMARY.md
         git commit -m "Updating journal: ${journal_file}"
         git push
     fi
